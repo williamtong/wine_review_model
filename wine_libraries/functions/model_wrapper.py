@@ -12,43 +12,41 @@ rfm_params = {'n_estimators': 80,
              'max_depth': 300,
              'bootstrap': True,
              'criterion': "squared_error",
-             'verbose': 3,
+             'verbose': 1,
              'oob_score': True,
              'n_jobs': 8
              }
 xgboost_params = {'n_estimators' : 1000000,
                   'max_depth' : 6,
-                  'verbosity' : 2,
+                  'verbosity' : 3,
                   'n_jobs' : 8, 
                   'eval_metric': 'rmse', 
                   'colsample_bytree': 0.5,
                   'colsample_bynode': 0.5,
                   'learning_rate': 0.0025,
-                  'verbose': True, 
+                  'verbose': 100, # Tree intervals to print eval errors
                   'early_stopping_rounds' : 20
                  }
 
-class Tree_Model(): #TransformerMixin
+class Tree_Model(): 
     def __init__(self, Model, params, price_max = 300
                  ):
-        self.price_max = price_max,  # For plots
+        self.price_max = price_max,  # For plotting only
         self.params = params
         self.model = Model()
         self.model.set_params(**self.params)
 
     def fit(self,X_train, y_train_actual):
             
-        self.price_max = self.price_max[0]
+        self.price_max = self.price_max[0] # For plotting only
         self.y_data_type = type(y_train_actual)
         y_train_actual = y_train_actual.values
 
         
         if 'early_stopping_rounds' in self.params.keys():
-            # print(f"self.params['eval_set'] = {self.params['eval_set']}")
             self.model.fit(X_train, y_train_actual,
-                          # early_stopping_rounds = self.params['early_stopping_rounds'],
-                          # verbose = self.params['verbose'],
-                          eval_set = self.params['eval_set']) 
+                           verbose = self.params['verbose'],
+                           eval_set = self.params['eval_set'])
         else:
             self.model.fit(X_train, y_train_actual)
             
@@ -86,6 +84,8 @@ class Tree_Model(): #TransformerMixin
         print(f"type(y_actual) = {y_actual_data_type}")
         print(f"self.y_data_type = {self.y_data_type}")
         y_predict = self.model.predict(X)
+
+        # If y_actual is not None, then calculate the holdout errors and plot results
         if y_actual_data_type == self.y_data_type:
             
             y_actual = y_actual.values

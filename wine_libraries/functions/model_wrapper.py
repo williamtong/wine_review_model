@@ -1,5 +1,3 @@
-# from sklearn.ensemble import RandomForestRegressor
-# from sklearn.base import TransformerMixin #gives fit_transform method for free
 from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, mean_absolute_error
 
 import importlib
@@ -8,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 rfm_params = {'n_estimators': 80, 
-             'max_features': 'sqrt',
+             'max_features': '0.5',
              'max_depth': 300,
              'bootstrap': True,
              'criterion': "squared_error",

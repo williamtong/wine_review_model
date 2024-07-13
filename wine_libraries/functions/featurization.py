@@ -33,14 +33,22 @@ import itertools
 
 import gc
 
+
+# These Saint words are only used in place or denomination names.  They each will be combined with
+# the word after them.
 saint_words = ['St. ' , 'Ste. ' , 'San ', 'Santa ', 'Saint ', 'Sainte ',  'St ', 'Ste ']
+
+# To be removed.
 stop_words = ['la',  '&', 'le', 'les', 'the', 'da', 'della', 'del', 'de', 'al', 'alla',
               'dos', 'das', 'di', 'du', 'do', 'lo', 'of', 'and', 'with', 'to']
+
+# Location info to be concatenated together.
 location_info_features = ["region-1", "region-2", "province", "country"]
 
 def flatten_list(xss):
     return [x for xs in xss for x in xs]
 
+    
 class Preprocess_Data:
     def __init__(self,
                  columns_to_drop = ['taster-twitter-handle', 'description'],
@@ -63,36 +71,47 @@ class Preprocess_Data:
         return self
 
     def transform(self, df, y = None):
-        df = df.copy()
+        df = df.copy() # Don't want to change the original df
         df.drop(self.columns_to_drop, axis = 1, inplace = True)
-        
+
+        # Impute the value "-Unknown" into column 
         for col in self.columns_to_impute_unknown: 
             df[col] = df[col].fillna(col+"-Unknown")
-
+        
+        df = df.copy()  # defragment pandas dataframe
         return df
 
 def variety_tokenizer(df, feature):
     #G-S-M is a special case that would have been removed if the following step were not done
     df[feature] = df[feature].apply(lambda text: 'GSM' if text == 'G-S-M' else text)
-    orig_multigram = list(df[feature].fillna('black_entry').apply(lambda text: text.replace("-", " ").replace("(", "").replace(")", "")).values)
+
+    # Impute value "BlankEntry" in feature
+    orig_multigram = list(df[feature].fillna('BlankEntry').apply(lambda text: text.replace("-", " ").replace("(", "").replace(")", "")).values)
+    
     multigram_list = [text.split() for text in orig_multigram]
-    # print(multigram_list)
     flattened_multigram_list = flatten_list(multigram_list)
     unique_multigrams = list(set([word for word in flattened_multigram_list if word not in stop_words and len(word)>1]))
     unique_multigrams = [unique_multigram for unique_multigram in unique_multigrams if unique_multigram not in stop_words]
     return multigram_list, unique_multigrams
 
 def individual_text_processing(text):
+    '''Function to perform customized processing of the text. 
+    See comments for explanation for each step.
+    '''
+
+    # Remove all hyphens because they will be used to join words
     text = text.replace("-", " ")
- 
+
+    # Capitalize the first letter in each text.
     text = text[0].upper() + text[1:]
     
     # Add an extra '(' to the end of text if it doesn't have one.
+    # Most titles end with a text at the end in parenthesis between which the denomination is list.
+    # This is redundant info.  This step is to remove this.
     if '(' not in text:
         text = text + '('
     #Remove words after last open parenthesis because those are redundant location info.    
     text = text[:-text[::-1].index('(')-1]
-
 
     # Remove all other parenthesis
     text = text.replace('(', '').replace(')','')
@@ -101,7 +120,7 @@ def individual_text_processing(text):
     for saint_word in saint_words:
         text = text.replace(saint_word, saint_word[:-1])
         
-    #Replace all regular punctuations
+    #Replace all common punctuations
     for char in [',', '.', ';', ':', '#', "'", '"', "_"]:
         text = text.replace(char, '')
         
@@ -114,8 +133,10 @@ def individual_text_processing(text):
 
     text = ' '.join(text)
     
-    #Convert all words to lower case
+    # Convert all words to lower case
     text = text.lower()
+
+    # Tokenize and create bigrams
     tokenizer = MWETokenizer(text,  separator='&')
     token_list = [token for token in tokenizer.tokenize(text.split())]
     bigram_list = list(bigrams(token_list))
@@ -123,7 +144,9 @@ def individual_text_processing(text):
     token_list.extend(bigram_list)
     return token_list
     
-def text_tokenizer(df, feature, training = True):
+def text_tokenizer(df, feature, training = True, individual_text_processing = individual_text_processing):
+    '''Apply individual_text_processing above function and then tokenize
+    '''
     token_list = df[feature].apply(individual_text_processing)
     if training:
         unique_multigrams = list(set(flatten_list(token_list)))
@@ -133,7 +156,12 @@ def text_tokenizer(df, feature, training = True):
 
 
 class Create_Simple_Onehot():
+    '''
+    This function creates onehot features for a given column.
+    Note that it does not create an column for nulls.
+    '''
     def __init__(self, feature = 'winery', threshold_frac = 0.0001):
+        
         self.feature = feature
         self.threshold_frac = threshold_frac
 
@@ -143,9 +171,8 @@ class Create_Simple_Onehot():
         df_column = pd.DataFrame(columns = [self.feature],
                                  data = df[self.feature].values,
                                  index = df.index)
-        # onehotencoder = OneHotEncoder()
         min_frequency = int(self.threshold_frac*df.shape[0] + 0.5)
-        # print(f'min_frequency = {min_frequency}')
+
         self.onehot = OneHotEncoder(min_frequency = min_frequency,
                                     sparse_output = False,
                                     handle_unknown = 'infrequent_if_exist',
@@ -177,12 +204,26 @@ class Create_Simple_Onehot():
 
 class Create_Multigrams():
     def __init__(self, tokenizer, feature = 'variety', threshold_frac = 0.01):
+        '''
+        Input:
+        feature (string): Name of feature to create multigrams
+        tokenizer:  tokenizer used
+        threshold_frac: The minimum fraction of rows that the feature must be present (True)
+                        for the multigram to be kept
+        '''
         self.feature = feature
         self.tokenizer = tokenizer
         self.threshold_frac = threshold_frac
         pass
         
     def fit(self, df, y = None):
+        '''
+        input:
+        df (pandas dataframe): X dataframe.
+        y:  Dummy var is there only because the scikit learn Pipeline class requires it.
+
+        '''
+        
         print(f'Creating multigrams for feature = {self.feature}')
         num_of_rows = df.shape[0]
         orig_multigram_list, self.unique_vocab  = self.tokenizer(df, self.feature)
@@ -193,30 +234,35 @@ class Create_Multigrams():
         #min threshold_count must be 1
         if self.threshold_frac * df.shape[0] < 1:
             self.threshold_frac = 20/df.shape[0]
-        
+
+        # create dictionary of the frequency of each word.
         self.filtered_unique_vocab = []
         for unique_vocab in self.unique_vocab:
             frac_of_trues = vocab_count_dict[unique_vocab]/num_of_rows
-            # if frac_of_trues is None:
-            #     print(unique_vocab, frac_of_trues, self.threshold_frac, end = ', ')
-                
             if frac_of_trues >= self.threshold_frac: 
                 self.filtered_unique_vocab.append(unique_vocab)
                 vocab_count_dict[unique_vocab] = frac_of_trues
             else:
-                # print("")
                 pass
         return self
         
     def transform(self, df, y = None):
-        '''For each text entry, remove duplicated words and output a tuple of the split words'''
+        '''For each text entry, remove duplicated words and output a tuple of the split words
+        
+        input:
+        df (pandas dataframe): X dataframe.
+        y:  Dummy var is there only because the scikit learn Pipeline class requires it.
+
+        output:
+        df: original df matrix with tokenized features added and source features removed.
+        '''
         length = df.shape[0]
         index_output = df.index
         multigram_list, _ = self.tokenizer(df, self.feature)
         filtered_multigram_list = [[monogram for monogram in multigram if monogram in self.filtered_unique_vocab] 
                                    for multigram in multigram_list]
         df_onehot_list = []
-        for unique_word in self.filtered_unique_vocab[::]:
+        for unique_word in self.filtered_unique_vocab:
             unique_word_in_data = [x for x in map(lambda filtered_multigram: unique_word in filtered_multigram, filtered_multigram_list)]
             df_onehot_word = pd.DataFrame(columns = [f'{self.feature}_{unique_word}'],
                                           data = unique_word_in_data,
@@ -234,11 +280,20 @@ class Create_Multigrams():
         return df_output 
 
 class Merge_Similar_Columns():
+    '''
+    This functions examines the column names and find the ones that are the same, and merge them.
+    '''
     def __init__(self):
         pass
 
     def fit(self, df, y = None):
-        self.df = df
+        '''
+        Find the columns that are duplicate in the original training data set.
+        
+        input:
+        df (pandas dataframe):  X data
+        y:  Dummy var is there only because the scikit learn Pipeline class requires it.
+        '''
         #suffices are actual feature names after the _
         suffices = [col.split("_")[-1] for col in df.columns]
 
@@ -250,23 +305,36 @@ class Merge_Similar_Columns():
         return self
 
     def transform(self, df, y = None):
+        '''
+        Merge the columns with similar names.
+                
+        input:
+        df (pandas dataframe):  X data
+        y:  Dummy var is there only because the scikit learn Pipeline class requires it.
+
+        output:
+        df (pandas dataframe): original df matrix duplicated columns merged.
+        '''
+        df = df.copy() # Creates copy to protect original
         print(f'Merging the following raw columns: {self.duplicated_features}')
         for duplicated_feature in self.duplicated_features:
             duplicated_feature_set = [col for col in df.columns 
                                       if duplicated_feature.lower() == col.lower().split("_")[-1]]
             print(f'Merging the following columns into one: {duplicated_feature_set}.')
-            df.loc[:, f'merged-{string.capwords(duplicated_feature, sep = None) }'] = df[duplicated_feature_set].sum(1) > 0
-            # print(df.loc[:, f'merged-{string.capwords(duplicated_feature, sep = None) }'])
+            df.loc[:, f'merged_{string.capwords(duplicated_feature, sep = None) }'] = df[duplicated_feature_set].sum(1) > 0
             df.drop(duplicated_feature_set, axis = 1, inplace = True)
             print(f'Number of columns after merging = {df.shape[1]}')
-            # print('')
             
-            # Defragment pandas dataframe.
-            df = df.copy()
+            df = df.copy() # Defragment pandas dataframe.
         return df 
 
 
 class Normalize_Points():
+    '''
+    This function takes the points earned by each wine, and convert them to normalized points
+    aggregated by the taster.
+    This is to remove the bias and var for each taster.
+    '''
     def __init__(self, point_feature = 'points', groupby_feature = 'taster-name', drop_orig_data = True):
         self.point_feature = point_feature
         self.groupby_feature = groupby_feature

@@ -11,7 +11,7 @@ import nltk
 from nltk.corpus import stopwords
 nltk.download('stopwords')
 
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 
 info_features = ['title',  'designation', 'variety', 'region-1','region-2', 'province', 'country', 'winery']
 
@@ -73,10 +73,7 @@ def find_similarities(df_all_wines_embeds,
     # A price_importance term is included to the exponential to allow for the weighting of this term.  
     # A larger price_importance term would make the distribution of price_sim broader, thereby increasing its importance in the 
     # overall_similarity calculation.
-    print(indiv_win_price.values)
-    print("")
-    print(type(all_wines_prices))
-    price_sim = np.exp(-np.square(indiv_win_price.values - all_wines_prices)*price_importance/indiv_win_price.values)
+    price_sim = np.exp(-np.square(indiv_win_price - all_wines_prices)*price_importance/indiv_win_price)
     overall_similarity = desc_sim * price_sim
     
     df_similarities = pd.DataFrame(columns=["desc_sim", "price_sim", "overall_similarity"],
@@ -85,7 +82,14 @@ def find_similarities(df_all_wines_embeds,
     return df_similarities
 
 
-def find_your_wine(df_all, your_wine_text, df_all_wines_embeds, text_tranformer, your_price, price_importance = 1, similarity_function = "cosine"):
+def find_your_wine(df_all, 
+                   your_wine_text, 
+                   df_all_wines_embeds, 
+                   text_tranformer, 
+                   your_price, 
+                   price_importance = 1, 
+                   similarity_function = "cosine",
+                   output_verbose = False):
     '''This function allows you to create a descriptive text and a price for a wine you like, and it looks for the best match.
 
     Input:
@@ -123,14 +127,21 @@ def find_your_wine(df_all, your_wine_text, df_all_wines_embeds, text_tranformer,
                                         )
 
     # Merge results with the modified description.  Sort by overall_similarity.
-    df_merged = pd.merge(df_all.drop(info_features, axis =1), 
+    if output_verbose == False:
+        df_all = df_all.drop(info_features, axis =1)
+    df_merged = pd.merge(df_all, 
                          df_similarities, 
                          left_index=True,
                          right_index=True).sort_values("overall_similarity", ascending=False)
     return df_merged
     
 
-def most_similar_wine_within_dataset(df_all, df_all_wines_embeds, wine_of_interest_index, price_importance = 1, similarity_function = 'cosine'):
+def most_similar_wine_within_dataset(df_all, 
+                                     df_all_wines_embeds, 
+                                     wine_of_interest_index, 
+                                     price_importance = 1, 
+                                     similarity_function = 'cosine',
+                                     output_verbose = False):
     '''This function assumes that someone is interested in a certain wine in the data set.
     1.  Takes the index number of that wine, and calculates the embeddings for the description (review).
     2.  Calculates the cosine similarity of #1 with the pre-calculated description embeddings of the review corpus.
@@ -155,17 +166,14 @@ def most_similar_wine_within_dataset(df_all, df_all_wines_embeds, wine_of_intere
     # Get description embed vector of wine of interest
     wine_of_interest_embed = df_all_wines_embeds.loc[wine_of_interest_index,:].values
     print(wine_of_interest_index)
-    # wine_of_interest_embed = pd.DataFrame(data = wine_of_interest_embed.values.reshape(1,-1),
-    #                                       columns = df_all_wines_embeds.columns,
-    #                                       index = [wine_of_interest_index]
-    #                                      )
-    # print(wine_of_interest_embed)
+
     wine_of_interest_embed.reshape(-1, 1)
     # Get price of wine_of_interest
     wine_of_interest_price = df_all.loc[wine_of_interest_index,:]["price"]
     
     all_wines_prices = df_all["price"].values
 
+        
     df_similarities = find_similarities(df_all_wines_embeds, 
                                         all_wines_prices, 
                                         wine_of_interest_embed, 
@@ -174,7 +182,9 @@ def most_similar_wine_within_dataset(df_all, df_all_wines_embeds, wine_of_intere
                                         similarity_function = similarity_function
                                         )
 
-    df_merged = pd.merge(df_all.drop(info_features, axis =1), 
+    if output_verbose == False:
+        df_all = df_all.drop(info_features, axis =1)
+    df_merged = pd.merge(df_all, 
                          df_similarities, 
                          left_index=True,
                          right_index=True

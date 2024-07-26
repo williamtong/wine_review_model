@@ -80,7 +80,7 @@ We employ the [python SHAP models](<https://shap.readthedocs.io/en/latest>) to c
 
 3. The best wines are French.
 
-    ![countries](./images/pricemodel_countries.png)
+    ![countries](./images/shap_figs/shap_nations.png)
 
 
 4. Shapley values can also shed light on the impact of vintage on the price of the wine. Below we can see Year 2009 is the best year, whereas 2014 is probably the worst.

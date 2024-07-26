@@ -1,6 +1,6 @@
-<h1>Wines of the world<h4>
+**Wines of the world**
 
-**INTRODUCTION TO THE DATA SET**
+*INTRODUCTION TO THE DATA SET*
 
 This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format.
 
@@ -93,19 +93,18 @@ FEATURIZATION
 - The main data were divided into three sets (train, val, holdout) in the proportions of 8: 1: 1.
 - Pipeline (sklearn) was used to featurized to avoid data leak. As a consequence, all the substeps were enclosed in a python wrapper object with _.fit_ and _.transform_ methods.
 
-1. Points:
+1. Points: See section on points above.
 
-See section on points above.
+2. Text (title)
+    a. The general scheme is to tokenize the title and variety into words and convert them into one-hot columns of monograms and bigrams. Bigrams are important in general. In the present use case, many of the grapes which were derivatives of the same variety but have very different flavor profiles. For example, _Pinot+Noir_ and _Pinot+Gris,_ and _Cabernet+Sauvignon_ and _Sauvignon+Blanc_. It is better to link them beforehand rather than relying on the model to discover them.
+    b. Stop words. Custom stop words. Remove foreign articles. No need for entire stop words our corpus is proper nouns, and not made of complete sentences.
+    c. “_Saint words_”: The proper names of many labels and locations are meaningless on their own. They are linked up to the words ahead of them. Example: _St. Emilion_ becomes _StEmilion_.
+    
 
-1. Text (title)
-    1. The general scheme is to tokenize the title and variety into words and convert them into one-hot columns of monograms and bigrams. Bigrams are important in general. In the present use case, many of the grapes which were derivatives of the same variety but have very different flavor profiles. For example, _Pinot+Noir_ and _Pinot+Gris,_ and _Cabernet+Sauvignon_ and _Sauvignon+Blanc_. It is better to link them beforehand rather than relying on the model to discover them.
-    2. Stop words. Custom stop words. Remove foreign articles. No need for entire stop words our corpus is proper nouns, and not made of complete sentences.
-    3. “_Saint words_”: The proper names of many labels and locations are meaningless on their own. They are linked up to the words ahead of them. Example: _St. Emilion_ becomes _StEmilion_.
-    4. **Winery**_**name**, **designation**, and location (**region, province, country, and taster-name**) were _not_ one-hotted as the complete expression represents unique information. For example, “_New York”_ means one thing, but _New_ and _York_ separately can mean two separate things.
+3. Deisgnation and Location: 
+**Winery**_**name**, **designation**, and location (**region, province, country, and taster-name**) were _not_ one-hotted as the complete expression represents unique information. For example, “_New York”_ means one thing, but _New_ and _York_ separately can mean two separate things.
 
 MODELS
-
-GBM, RFM, Deep Neural Network.
 
 GBM: 
 1. Employs weak learners (short trees) in series to fit the residues.  
@@ -150,10 +149,14 @@ A better approach is find the [_Shapley Values_ ](<https://www.investopedia.com/
 We employ the SHAP library to carry out the calculations and the plotting. Another important advantage of shap values it allows us to see not just the degree, but also sign of a feature’s impact (positive or negative) on the prediction \[\]. It takes much longer to run shap on the RFM model (more than 2 weeks so I had to stop) than on the GBM (2 days) because the large number and large sizes of the decision trees in the former, whereas in the latter model, even though the trees are more numerous, they are much smaller.
 
 1. It is unclear why _norm-points_ is ranked very low by the GBM model’s native _Feature_importances_. In fact, at rank 44 it is outside of the table. However, _norm-points_ is ranked first by shap. _Feature_importances_ is determined by the loss during modeling, whereas the shap values are determined by the incremental change in prediction when the feature value is changed. It is possible that at a fundamental level, there is a difference between the two.
+![overall](./wine_libraries/images/shap_figs/shap_all.png)
+
 2. Some wines or regions drive the prices up, such as as _Napa, Burgundy, Champagne._
+
 3. _Champagne_ was the most expensive grape type. Surprising, _merlot_ was having a resurgent. _Sauvignon Blanc_ was the lowest cost wine type.
 
-    ![best wine type](./wine_libraries/images/shap_bestwinetype.png)
+    ![best wine type](./wine_libraries/images/shap_figs/shap_grape_type.png)
+
 
 
 1. The best wines are French.

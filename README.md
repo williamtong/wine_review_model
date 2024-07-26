@@ -2,7 +2,7 @@
 
 INTRODUCTION TO THE DATA SET
 
-This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas Dataframe format.
+This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas Dawines_datasamplektaframe format.
 
 Below is a random sample of the data set.
 
@@ -69,17 +69,16 @@ _price distribution_
 
 DESIGNATION: This field typically contains extra information probably found on the label of the wine, in addition to that already covered in the _title_. It is not entirely consistent. Below are the top 40 Designations.
 
-![wine designations](./wine_libraries/images/wines_designation.png)
-
+![wine designations](./wine_libraries/images/Reviewed_designations.png)
 
 
 VARIETY: This is the variety of wine which often is the name of the grape. The categories are usually very well recognized by the wine consumer, so it is a very important category.
 
-![wine varieties](./wine_libraries/images/wines_varieties.png)
+![wine varieties](./wine_libraries/images/Reviewed_varieties.png)
+
 
 LOCATION: Below are the 40 most popular locations for where a wine comes from. Notice most are from the US. This is not surprising, as the reviewers are all Americans.
 
-![wine locations](./wine_libraries/images/wines_locations.png)
+![wine locations](./wine_libraries/images/Reviewed_locations.png)
 
 
-https://www.kaggle.com/datasets/zynicide/wine-reviews

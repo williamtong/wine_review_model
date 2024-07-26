@@ -4,7 +4,7 @@
 
 This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format.
 
-Below is a random sample of the data set.
+Below are 5 randomly sampled wines of the data set.
 
 ![data sample](./wine_libraries/images/wines_datasample.png)
 
@@ -85,8 +85,8 @@ Business use case:
 
 1. Price determination: How much should a vendor price a wine?
 2. Marketing:
-    1. What are the terms to put on or leave off a label?
-    2. What are the desirable intrinsic aspects of a wine (variety, location, etc.)?
+    a. What are the terms to put on or leave off a label?
+    b. What are the desirable intrinsic aspects of a wine (variety, location, etc.)?
 
 FEATURIZATION
 
@@ -95,8 +95,7 @@ FEATURIZATION
 
 1. Points:
 
-![normalized points](./wine_libraries/images/pricemodel_normpoints.png)
-
+See section on points above.
 
 1. Text (title)
     1. The general scheme is to tokenize the title and variety into words and convert them into one-hot columns of monograms and bigrams. Bigrams are important in general. In the present use case, many of the grapes which were derivatives of the same variety but have very different flavor profiles. For example, _Pinot+Noir_ and _Pinot+Gris,_ and _Cabernet+Sauvignon_ and _Sauvignon+Blanc_. It is better to link them beforehand rather than relying on the model to discover them.
@@ -108,34 +107,41 @@ MODELS
 
 GBM, RFM, Deep Neural Network.
 
-GBM: Typically the highest performing decision tree based model. The drawback is its speed, since it builds decision trees in series so it is difficult to parallelize.
+GBM: 
+1. Employs weak learners (short trees) in series to fit the residues.  
+2. Typically the highest performing decision tree based model. 
+3. Regularization: Number of features per tree.
+4. The drawback is its speed, since it builds decision trees in series so it is difficult to parallelize.
+    
 
-Regularization: Number of features per tree.
+RFM: 
+1. Uses strong learners (deep trees). 
+2. Avoids overfitting by fitting multiple trees in parallel.  
+3. Trees are _decorrelated_ by changing the features each has access to (max_features parameter)
+4. Usually performs slightly less well the GBM.  Good for Proof of Concept experiments.
 
-RFM:
+Neural Network: 
+1. State of the art.
+2. However, requires a lot of data takes a long time to train.
+3. Often does not performs as well as _decision tree_ models on tabulated data.
 
-Results:
+RESULTS:
 
 |     | Holdout | Holdout |     |     |     |
 | --- | --- | --- | --- | --- | --- |
 | Model | **MdAPE (%)** | **R^2** | **model library** | **Parameters** | **Notes** |
 | GBM | 21.9 | 0.445 | xgboost.XGBRegressor | lr = 1e-4, autostop = 20, num trees = 91596, max tree depth = 6 | It takes about six hours to run this, which is longer than the Random Forset model, because the trees have to built in series. Typically, this model performs better than random forest, but not in this case. |
-| RFM | 20.7 | 0.437 | scikit learn RandomForestRegressor | max_depth= 250,<br><br>num of trees = 2000,<br><br>max number of features per tree = sqrt" or sqrt(3000) = 55. | The is surprisingly fast, taking slightly less than one hour on my Mac M2 laptop (10 GPU), because the trees can be trained in parallel. However, what is even more surprising is it achieved a slightly lower error than GBM. |
+| RFM | 20.7 | 0.437 | scikit learn RandomForestRegressor | max_depth= 250,<br><br>num of trees = 2000,<br><br>max number of features per tree = "sqrt" or sqrt(3000) = 55. | The is surprisingly fast, taking slightly less than one hour on my Mac M2 laptop (10 GPU), because the trees can be trained in parallel. However, what is even more surprising is it achieved a slightly lower error than GBM. |
 | Neural Network | 26.6 | 0.466 | Keras | Layers = (128, 64, 32, 16, 8, 4, 2), dropouts = 0.2 | I rejected this model early because it took too long to train neural network for this task. To speed things up, I selected the top 128 most popular features among the 3000 to put in the model. I have the tried using PCA to select the best results, but that would lose the useful information on feature importance. It is well known that _decision tree_ models tend to perform better the neural network models.  It is especially not worthwhile unless you have a very large data set.  (110k data points is small)
 
+Both the _decision tree_ model perform well with MdAPE ~ 21-22%.  For pure price prediction purpose, we should employ the RFM model because it yielded marginaly better results.  However, for the next section involving Shapley value analysis, we shall employ the GBM model because it takes much longer to calculate the Shapley values of an RFM than for a GBM model.  
 
-ii. Positive and Negative words
-
-RESULTS
-
-Find what are the most important factors that affect prices.
+**Important factors that affect prices**
 
 Often it is useful to find which features have the biggest impact on the results of the model. The simplest is to use the “feature_importance” output of the decision tree model. There are many ways to calculate it, but mostly often, it is the sum of the losses caused by the feature. Below is the top 40 features for the Random Forest Model. One can see that the importance is dominated by the norm-point (normalized points given by the taster), then followed by the vintage (i.e. year) of the wine. This is likely to be too simplistic.
 
 ![feature importances](./wine_libraries/images/pricemodel_featureimp.png) 
 
-
-pricemodel_genshapvalues.png
 
 SHAPLEY VALUES
 
@@ -147,7 +153,8 @@ We employ the SHAP library to carry out the calculations and the plotting. Anoth
 2. Some wines or regions drive the prices up, such as as _Napa, Burgundy, Champagne._
 3. _Champagne_ was the most expensive grape type. Surprising, _merlot_ was having a resurgent. _Sauvignon Blanc_ was the lowest cost wine type.
 
-    ![best wine type](./wine_libraries/images/pricemodel_bestwinetype.png)
+    ![best wine type](./wine_libraries/images/shap_bestwinetype.png)
+
 
 1. The best wines are French.
 
@@ -156,15 +163,15 @@ We employ the SHAP library to carry out the calculations and the plotting. Anoth
 
 1. Shapley values can also shed light on the impact of vintage on the price of the wine. Below we can see Year 2009 is the best year, whereas 2014 is probably the worst.
 
-    ![vintages](./wine_libraries/images/pricemodel_vintage.png)
+    ![vintages](./wine_libraries/images/shap_figs/shap_vintages.png)
+
 
 1. For the US, Napa Valley on average drives the price highest, although there are more good wines from Sonoma which as a group has the most positive impact.
 
-    ![US Regions](./wine_libraries/images/pricemodel_USRegion.png)
-
+    ![US Regions](./wine_libraries/images/shap_figs/shap_usa_regions.png)
 1. Most tasters choose expensive wines to taste, or their ratings would drive the prices up, such as _Virginia Boone_ and _Joe Czerwinski_. However, some of the tasters, such as _Susan Kostrzewa_ and _Jeff Jenssen_ do prefer to sample wines that are “for the masses.”
 
-    ![tasters](./wine_libraries/images/pricemodel_taster.png)
+    ![tasters](./wine_libraries/images/shap_figs/shap_tasters.png)
 
 
 SHAPLEY WATERFALLS PLOTS
@@ -172,17 +179,15 @@ SHAPLEY WATERFALLS PLOTS
 Another useful function in the shap library is the waterfall plots. It can used to visualize the influences the predicted prices of an individual wines are.
 
 Below is a Bordeaux Supérieur from Château Meillier. The vertical line, shown as E\[f(X)\] on the x-axis at $35.532, is the mean price for all the wines. The bottom arrow shows the 3,107 least important features together pull the price down -$3.67. Then the impact of the top 20 features is shown. One can see the most serious problem with this wine is the points received, _norm-points =_ -0.529, pulled the price down -$9.06. The best thing about the wine is it is a _Bordeaux_, which lifted its price by +$1.08. The predicted price ended up to $15.88, which is with 22% of the actual price of $13.
+![Mullier](./wine_libraries/images/shap_figs/waterfall_château_meillier.png)
 
-![Mullier](./wine_libraries/images/pricemodel_waterfall_Muillier.png)
 
 Below is an expensive port by _Kopke_ which is a very high-end Port wine. The winery name lifted the price by a whooping +$141.53. It received a very high score (1.758 norm-points) which increased the price by +$134.06. [_Coheite_](<https://www.wine-searcher.com/regions-colheita+port>) is a very high-end _designation_, and [Coheite _White_]([<https://www.portugalvineyards.com/en/blog/colheita-white-port-a-very-special-port-n1426\>) is even more premium. Thus even the word _White_ had a lift of +$54.82; note this word it does not have such positive price impact in other white wines. This lift only happens at a sub-branch of decision trees specific for _Coheite Port_. The bigram of Coheite_white is probably too rare on the corpus to show up as a feature. The predicted price ended up to be $699.07, which is about 29% below the actual price of $980
-
-![kopke](./wine_libraries/images/pricemodel_waterfall_kopke.png)
+![kopke](./wine_libraries/images/shap_figs/waterfall_kopke-1935.png)
 
 
 Below is a _Barolo_, known as the “King of Wines, the wine of kings” (“_il re dei vini, il vino dei re_”) from Italy. Made by _Vietti_ from _Nebbiolo_ grapes from _Rocche di Castiglione, Piedmont_. These are the key drivers to boost the prediction to $128.04, which is only 14% below the actual price of $150.
-
-![Vietti](./wine_libraries//images/pricemodel_waterfall_vietti.png)
+![Vietti](./wine_libraries//images/shap_figs/waterfall_vietti_barolo_2010.png)
 
 **SUMMARY**
 

@@ -2,31 +2,28 @@
 
 INTRODUCTION TO THE DATA SET
 
-This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas Dawines_datasamplektaframe format.
+This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format.
 
 Below is a random sample of the data set.
 
 ![data sample](./wine_libraries/images/wines_datasample.png)
 
-| Column name | Explanation | Examples |
+| Column name | Explanation | Notes/Examples |
 | --- | --- | --- |
 | Points | Number of points given by the taster (see Taster-name) | Integer from 80-97. |
 | Title | This is the text that appears on the label. It almost always contains the vintage (year of production). | Gloria Ferrer NV Sonoma Brut Sparkling (Sonoma County) |
-| Description | The review by the taster. This typically is a text of about a few hundred words. |     |
-| Taster-name | Name of the reviewer (if available) |     |
-| Taster-twitter-handle | Taster twitter handle. (Redundant for our purpose, not used) |     |
+| Description | The review by the taster. This typically is a text of about a few hundred words. |"This dry Vinho Verde shows great crisp, green apple and grapefruit flavors, a deliciously fresh wine, with green edges and lively flavors. Great summer drink." |
+| Taster-name | Name of the reviewer (if available) | Virginie Boone |
+| Taster-twitter-handle | Taster twitter handle. |  (Redundant for our purpose, not used) |
 | Price | Price of wine | Range $4 to 3,330.<br><br>Mean $35.62<br><br>Median $ 25 |
-| Designation | Addition description found on the label of the wine, in addition to the title. Not entirely consistent. |     |
+| Designation | Addition description found on the label of the wine, in addition to the title. Not entirely consistent. |Top 5: 'Grande Reserva', 'Klipsun Vineyard', 'Montée de Tonnerre Premier Cru', 'San Lorenzo', 'Lawrence Vineyard'|
 | Variety | This typically contains the variety of the grape, or if it is a blend or unknown it is the type of the wine. | Pinot Noir, Gewürztraminer. |
-| Region-1 | These four columns tells the location the wine came from. The info is sometimes redundant and the categorization is not always consistent. |     |
-| Region-2 |     |
-| Province |     |
-| Country |     |
+| Region-1,  Region-2, Province, Country| These four columns tells the location the wine came from. The info is sometimes redundant and the categorization is not always consistent. |'Napa Valley', 'Napa', 'California'|
 | Winery | The name of the winery |     |
 
 POINTS: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1s.
 
-![price histogram](./wine_libraries//images/wines_pointhistogram.png)
+![price histogram](./wine_libraries/images/raw_point_distribution.png)
 
 However, each taster has bias and variance (or grades by a different curve, in layman parlance), so the points are normalized by the subtracting it from the mean and dividing it by the standard deviation for the taster. The normalized points (called norm-points) is used instead of points in the model.
 
@@ -41,7 +38,7 @@ However, each taster has bias and variance (or grades by a different curve, in l
 | Jeff Jenssen | 436 | 88.33 | 82  | 97  | 2.1 |
 | Jim Gordon | 3761 | 88.60 | 80  | 97  | 2.7 |
 | Joe Czerwinski | 4644 | 88.52 | 80  | 100 | 2.9 |
-| Kerin O‚ÄôKeefe | 8885 | 88.94 | 80  | 100 | 2.5 |
+| Kerin O'Keefe | 8885 | 88.94 | 80  | 100 | 2.5 |
 | Lauren Buzzeo | 1582 | 87.50 | 81  | 95  | 2.5 |
 | Matt Kettmann | 5643 | 90.09 | 81  | 97  | 2.6 |
 | Michael Schachner | 13871 | 86.86 | 80  | 98  | 3.1 |
@@ -63,9 +60,9 @@ Most of the wines are priced below $36. However, the highest priced wines are $3
 
 _price distribution_
 
-![price histogram linear](./wine_libraries/images/wines_pricehistogramlinear.png)
+![price histogram linear](./wine_libraries/images/wineprice_histogram_linear.png)
 
-![price histogram linear](./wine_libraries/images/wines_pricehistogramlog.png)
+![price histogram linear](./wine_libraries/images/wineprice_histogram_log.png)
 
 DESIGNATION: This field typically contains extra information probably found on the label of the wine, in addition to that already covered in the _title_. It is not entirely consistent. Below are the top 40 Designations.
 

@@ -50,6 +50,12 @@ No wine consumer will ignore the price of a wine in the selection process. Thus 
 
 One possible use case is if a consumer likes a certain wine but it is out of the affordability range, the model should account for it price. Any successful wine recommender needs to account for this in its modeling. We employ the following function, which is the normalized variance of the prices, multiplied by a _price importance_ (0 ≤ price_imp ≤ 1) factor.
 
+
+### _Similarity<sub>price</sub> = exp<sup> -(price<sub>interest</sub> - price <sub>another wine</sub>) <sup>2 </sup>price_importance <sup>2 </sup>/price<sub>interest</sub><sup>2</sup>_ ###
+
+
+
+
 Note the impact of the price_imp scales exponentially. The figure below shows its impact. A factor of 1 would be too powerful and it would narrow the choices too much. We choose a factor 0.01 (green). However, this can be tailored by the user as she/he sees fit.
 
 ![price importance factor](./images/winerec_priceimp.png)

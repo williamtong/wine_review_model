@@ -74,6 +74,60 @@ VARIETY: This is the variety of wine which often is the name of the grape. The c
 ![wine varieties](./wine_libraries/images/Reviewed_varieties.png)
 
 
-LOCATION: Below are the 40 most popular locations for where a wine comes from. Notice most are from the US. This is not surprising, as the reviewers are all Americans.
+LOCATION: Below is the comprehensive list of countries of the wines in the data set. Notice most are from the US. This is not surprising, as the reviewers are all Americans.
 
+
+| **country** | count |
+| --- | --- |
+| **US** | 50238 |
+| **France** | 16286 |
+| **Italy** | 15506 |
+| **Spain** | 6049 |
+| **Portugal** | 4502 |
+| **Chile** | 4130 |
+| **Argentina** | 3501 |
+| **Austria** | 2536 |
+| **Australia** | 2169 |
+| **Germany** | 1951 |
+| **New Zealand** | 1240 |
+| **South Africa** | 1195 |
+| **Israel** | 453 |
+| **Greece** | 427 |
+| **Canada** | 224 |
+| **Bulgaria** | 132 |
+| **Hungary** | 128 |
+| **Romania** | 102 |
+| **Uruguay** | 98  |
+| **Turkey** | 81  |
+| **Georgia** | 74  |
+| **Slovenia** | 70  |
+| **Croatia** | 68  |
+| **Mexico** | 68  |
+| **England** | 59  |
+| **Moldova** | 56  |
+| **Unspecified** | 55  |
+| **Brazil** | 44  |
+| **Lebanon** | 32  |
+| **Morocco** | 24  |
+| **Peru** | 16  |
+| **Ukraine** | 14  |
+| **Czech Republic** | 11  |
+| **Macedonia** | 11  |
+| **Cyprus** | 10  |
+| **Serbia** | 8   |
+| **India** | 8   |
+| **Switzerland** | 6   |
+| **Luxembourg** | 5   |
+| **Bosnia and Herzegovina** | 2   |
+| **Armenia** | 2   |
+| **Slovakia** | 1   |
+| **China** | 1   |
+
+Here are the 40 most popular _geographic locations_ from which the wine came.  
 ![wine locations](./wine_libraries/images/Reviewed_locations.png)
+
+
+
+Models were trained for two separate use cases:
+1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Click for written summary here.](./wine_libraries/price_model/README.md)
+2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines.[Click for written summary here](./wine_libraries/wine_recommender//README.md)

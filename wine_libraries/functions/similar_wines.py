@@ -1,10 +1,9 @@
 import pandas as pd
-# pd.set_option('display.max_colwidth', None)
 
 import numpy as np
 import torch
 import gzip
-# import os
+import os
 import pickle
 
 import nltk
@@ -110,7 +109,8 @@ def find_your_wine(df_all,
     df_all_wines_embeds.drop(drop_columns, axis = 1, inplace = True)
 
     # Remove stop words from your_wine_text
-    your_wine_text = " ".join( [w for w in " ".join([w for w in your_wine_text.split() if not w in stop_words]).split() if not w in stop_words])
+    # your_wine_text = " ".join( [w for w in " ".join([w for w in your_wine_text.split() if not w in stop_words]).split() if not w in stop_words])
+    
     # Encode your_wine_text into embedding vector\
     desc_embeds = text_tranformer.encode(your_wine_text, convert_to_tensor=False)
 

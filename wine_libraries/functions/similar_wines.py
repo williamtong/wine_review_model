@@ -52,10 +52,8 @@ def find_similarities(df_all_wines_embeds,
     df_similarities (pandas dataframe): the description, price, and overall similarities between the wine of interest and all wines.
     '''
     if similarity_function == "cosine":
-        print(similarity_function)
         similarity_function = cosine_similarity
     elif similarity_function == "distance":
-        print(similarity_function)
         similarity_function = euclidean_distances
     else:
         print
@@ -191,3 +189,37 @@ def most_similar_wine_within_dataset(df_all,
                         ).sort_values("overall_similarity", ascending = False)
 
     return df_merged
+
+def find_your_wine_w_your_own_text(your_wine_text, 
+                                   your_price, 
+                                   df, 
+                                   df_embeds, 
+                                   text_transformer, 
+                                   price_importance = 0.01,
+                                   how_many_similar_wines = 5):
+    '''
+    This functions allows you to enter a wine description and a price and it will find the most similar wines for you.
+    
+    Input:
+    your_wine_text (string):  The user's description of the desired wine's characteristics.
+    your_price (float)  The user's desired wine price in US dollars.
+    df (pandas data frame):  The wine data corpus.
+    df_embeds (pandas data frame):  The prevectorized embedding of the description text for each wine (in the same order as df).
+    text_transformer (Hugging Face transform):  The transform object used to convert the description into embeddings.
+    price_importance (0 ≤ price_importance ≤ 1):  The importance factor for price compared to the description (high = more important)
+    how_many_similar_wines (int): How many similar wines to show.
+
+    Output:
+    df_merged (pandas dataframe): The most similar wines with title, description, price, desc_sim, price_sim, overall_sim, and similarity rank.
+    '''
+    
+    print(f'Your desired wine: "{your_wine_text}", your desired price: ${your_price}')
+    your_wine_text = " ".join([w for w in your_wine_text.split() if not w in stop_words])
+    your_price, your_wine_text
+    df_merged = find_your_wine(df, your_wine_text, df_embeds, text_transformer, 
+                               your_price, output_verbose = True, price_importance = 0.01, similarity_function = "cosine")
+    df_merged = df_merged[[ "title", "description", "price", "desc_sim", "price_sim", "overall_similarity",
+              ]].sort_values("overall_similarity", ascending = False).head(10)
+    df_merged['rank'] = range(1,df_merged.shape[0]+1)
+    df_merged.index = df_merged['rank'] 
+    return df_merged.head(how_many_similar_wines)

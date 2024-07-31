@@ -86,3 +86,8 @@ Your_price = 35
 Note: More wine recommender examples can be found in the [images/wine_recommender](./wine_libraries/images/wine_recommender) folder.
 
 As one can see, the model works very well. It can be used to help wine lovers look for the wine at they want at a price point they can afford.
+
+See notebooks in the folder [link.](./notebooks/)
+1.  **_create_description_embeddings.ipynb_** for creating the description embeedings.
+2.  **_fine_tune_similarity.ipynb_** for fine tuning the various parameters.
+3.  **_find_most_similar_wines.ipynb_** for demonstrating the modeling performing wine recommendation based on the user's input.

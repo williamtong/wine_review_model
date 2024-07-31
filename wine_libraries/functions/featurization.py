@@ -36,11 +36,11 @@ import gc
 
 # These Saint words are only used in place or denomination names.  They each will be combined with
 # the word after them.
-saint_words = ['St. ' , 'Ste. ' , 'San ', 'Santa ', 'Saint ', 'Sainte ',  'St ', 'Ste ']
+saint_words = ['St. ' , 'Ste. ' , 'San ', 'Santa ', 'Saint ', 'Sainte ',  'St ', 'Ste ', 'Sta. ']
 
 # To be removed.
-stop_words = ['la',  '&', 'le', 'les', 'the', 'da', 'della', 'del', 'de', 'al', 'alla',
-              'dos', 'das', 'di', 'du', 'do', 'lo', 'of', 'and', 'with', 'to']
+stop_words = ['&', 'la', 'le', 'les', 'the', 'da', 'dal', 'dalla', 'della', 'del', 'de', 'al', 'alla', 'gli', 'i',
+              'dos', 'das', 'di', 'du', 'do', 'lo', 'of', 'and', 'with', 'to', 'the', 'a', 'an']
 
 # Location info to be concatenated together.
 location_info_features = ["region-1", "region-2", "province", "country"]
@@ -61,7 +61,7 @@ class Preprocess_Data:
         pass
         
     def fit(self, df, y = None):
-        #check to make sure columns are presnt
+        #check to make sure columns are present
         if len([col for col in self.columns_to_drop if col not in df.columns]) > 0:
             print(f'Some of the following columns {[col for col in self.columns_to_drop if col not in df.columns]} not in df')
             exit()

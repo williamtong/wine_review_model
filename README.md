@@ -21,7 +21,7 @@ Below are 5 randomly sampled wines of the data set.
 | Region-1,  Region-2, Province, Country| These four columns tell the location the wine came from. The info is sometimes redundant and the categorization is not always consistent. |'Napa Valley', 'Napa', 'California', 'US'|
 | Winery | The name of the winery |'Kendall-Jackson'|
 
-POINTS: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1s.
+POINTS: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1&#963; .
 
 ![price histogram](./wine_libraries/images/raw_point_distribution.png)
 
@@ -129,5 +129,5 @@ Here are the 40 most popular _geographic locations_ from which the wine came.
 
 
 Models were trained for two separate use cases:
-1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Click for written summary here.](./wine_libraries/price_model/README.md)
-2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines.[Click for written summary here](./wine_libraries/wine_recommender//README.md)
+1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Click for README.md summary here.](./wine_libraries/price_model/README.md)
+2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines.[Click for README.md summary here](./wine_libraries/wine_recommender//README.md)

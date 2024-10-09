@@ -1,12 +1,25 @@
-**Wines of the world**
+<h1>Wines of the world</h1>
 
-*INTRODUCTION TO THE DATA SET*
+<h3>Topline summary:</h3>
+
+1.  The best model was the Random Forest Model, which yielded an MdAPE of 20.6% and R<sup>2</sup> of 0.435. To skip head, [click for <i>price model</i> summary here.](./wine_libraries/price_model/README.md)
+
+2.  A <i>wine recommender model</i> that uses a sentence input of the user to recommend wines was successfully trained.  To skip ahead, [click for <i>wine recommeder</i> summary here](./wine_libraries/wine_recommender/README.md)
+
+<h3>This README page goes into the details on data.  To skip to results, please click on one of the two links above.</h3>
+
+<h3>INTRODUCTION TO THE DATA SET</h3>
 
 This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format.
 
 Below are 5 randomly sampled wines of the data set.
 
-![data sample](./wine_libraries/images/wines_datasample.png)
+<figure>
+    <img src='./wine_libraries/images/wines_datasample.png' width="800">
+    <figcaption>Figure: Data sample</figcaption>
+</figure>
+<br>
+</br>
 
 | Column name | Explanation | Notes/Examples |
 | --- | --- | --- |
@@ -23,7 +36,12 @@ Below are 5 randomly sampled wines of the data set.
 
 POINTS: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1&#963; .
 
-![price histogram](./wine_libraries/images/raw_point_distribution.png)
+<figure>
+    <img src='./wine_libraries/images/raw_point_distribution.png' width="800">
+<figcaption>Figure: Distribution of reviewers' raw points</figcaption>
+</figure>
+<br>
+</br>
 
 However, each taster has bias and variance (or grades by a different curve, in layman parlance), so the points are normalized by the subtracting it from the mean and dividing it by the standard deviation for the taster. The normalized points (called norm-points) is used instead of points in the model.
 
@@ -50,7 +68,7 @@ However, each taster has bias and variance (or grades by a different curve, in l
 | Unknown | 23273 | 87.78 | 80  | 100 | 3.3 |
 | Virginie Boone | 8682 | 89.22 | 80  | 99  | 3.1 |
 
-PRICE
+<h3>PRICE</h3>
 
 Most of the wines are priced below $36. However, the highest priced wines are $3,300. Because of the sparsity of data at higher prices, the error of the ML model’s predictions increase as the price increases.
 
@@ -58,23 +76,33 @@ Most of the wines are priced below $36. However, the highest priced wines are $3
 | --- | --- | --- | --- | --- |
 | Price | $4  | $3,300 | $35.62 | $25 |
 
-_price distribution_
+<h4>price distribution</h4>
 
-![price histogram linear](./wine_libraries/images/wineprice_histogram_linear.png)
-
-![price histogram linear](./wine_libraries/images/wineprice_histogram_log.png)
-
-DESIGNATION: This field typically contains extra information probably found on the label of the wine, in addition to that already covered in the _title_. It is not entirely consistent. Below are the top 40 Designations.
-
-![wine designations](./wine_libraries/images/Reviewed_designations.png)
-
-
-VARIETY: This is the variety of wine which often is the name of the grape. The categories are usually very well recognized by the wine consumer, so it is a very important category.
-
-![wine varieties](./wine_libraries/images/Reviewed_varieties.png)
+<figure>
+    <img src='./wine_libraries/images/wineprice_histogram_linear.png' width="400">
+<img src='./wine_libraries/images/wineprice_histogram_log.png' width="400">
+<figcaption>Figure: price histogram on linear (l) and logarithmic (r) scales</figcaption>
+</figure>
+<br>
+</br>
 
 
-LOCATION: Below is the comprehensive list of countries of the wines in the data set. Notice most are from the US. This is not surprising, as the reviewers are all Americans.
+<figure>
+    <img src='./wine_libraries/images/Reviewed_designations.png' width="800">
+<figcaption>Figure: Top 40 designations. This field typically contains extra information probably found on the label of the wine, in addition to that already covered in the <i>title</i>. It is not entirely consistent. 
+</figcaption>
+</figure>
+<br>
+</br>
+
+<figure>
+    <img src='./wine_libraries/images/Reviewed_varieties.png' width="800">
+<figcaption>Figure: Top 40 wine varieties.  Often this is the name of the grape. The categories are usually very well recognized by the wine consumer, so it is a very important category.
+</figcaption>
+</figure>
+<br>
+</br>
+
 
 
 | **country** | count |
@@ -123,11 +151,20 @@ LOCATION: Below is the comprehensive list of countries of the wines in the data 
 | **Slovakia** | 1   |
 | **China** | 1   |
 
-Here are the 40 most popular _geographic locations_ from which the wine came.  
-![wine locations](./wine_libraries/images/Reviewed_locations.png)
+Table: Above is the comprehensive list of countries of the wines in the data set. Notice most are from the US. This is not surprising, as the reviewers are all Americans.
 
+Here are the 40 most popular _geographic locations_ from which the wine came.  
+
+<figure>
+    <img src='./wine_libraries/images/Reviewed_locations.png' width="800">
+<figcaption>Figure: Top 40 most popular wine locations</figcaption>
+</figure>
+<br>
+</br>
 
 
 Models were trained for two separate use cases:
 1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Click for README.md summary here.](./wine_libraries/price_model/README.md)
 2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines.[Click for README.md summary here](./wine_libraries/wine_recommender//README.md)
+
+

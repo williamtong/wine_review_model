@@ -151,7 +151,7 @@ Most of the wines are priced below $36. However, the highest priced wines are $3
 | **Slovakia** | 1   |
 | **China** | 1   |
 
-Table: Above is the comprehensive list of countries of the wines in the data set. Notice most are from the US. This is not surprising, as the reviewers are all Americans.
+Table: Above is the comprehensive list of countries of the wines in the data set. Notice most wines in the data set are from the US. This is not surprising, as the reviewers are all Americans.
 
 Here are the 40 most popular _geographic locations_ from which the wine came.  
 
@@ -161,7 +161,6 @@ Here are the 40 most popular _geographic locations_ from which the wine came.
 </figure>
 <br>
 </br>
-
 
 Models were trained for two separate use cases:
 1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Click for README.md summary here.](./wine_libraries/price_model/README.md)

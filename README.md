@@ -2,7 +2,7 @@
 
 <figure>
     <img src='./wine_libraries/images/Wine_tasting.jpeg' width="800">
-    <figcaption></figcaption>
+    <figcaption>Source: https://vacationmavens.com/184-wine-tasting-tips-and-wine-travel/</figcaption>
 </figure>
 
 This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format.
@@ -102,7 +102,7 @@ Most of the wines are priced below $36. However, the highest priced wines are $3
 
 <figure>
     <img src='./wine_libraries/images/Reviewed_varieties.png' width="800">
-<figcaption>Figure: Top 40 wine varieties.  Often this is the name of the grape. The categories are usually very well recognized by the wine consumer, so it is a very important category.
+<figcaption>Figure: Top 40 wine varieties.  Often this is the name of the grape. This is usually the feature most recognized by the wine consumer, so it is a very important category.
 </figcaption>
 </figure>
 <br>

@@ -4,8 +4,6 @@
 
 1.  The best model was the Random Forest Model (RFM), which yielded an MdAPE of 20.6% and R<sup>2</sup> of 0.435.
 
-
-
 2.  Next best is the Gradient Boosting Model (GBM), which yielded an MdAPE of 21.9% and R<sup>2</sup> of 0.445.  The 6-layer DNN model surprisingly performed the worst, with an MdAPE of 26.6% and R<sup>2</sup> of 0.466.
 
 <h3>Business use case:</h3>

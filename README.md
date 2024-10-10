@@ -1,5 +1,12 @@
 <h1>Wines of the world</h1>
 
+<figure>
+    <img src='./wine_libraries/images/Wine_tasting.jpeg' width="800">
+    <figcaption></figcaption>
+</figure>
+
+This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format.
+
 <h3>Topline summary:</h3>
 
 1.  The best model was the Random Forest Model, which yielded an MdAPE of 20.6% and R<sup>2</sup> of 0.435. To skip head, [click for <i>price model</i> summary here.](./wine_libraries/price_model/README.md)
@@ -9,8 +16,6 @@
 <h3>This README page goes into the details on data.  To skip to results, please click on one of the two links above.</h3>
 
 <h3>INTRODUCTION TO THE DATA SET</h3>
-
-This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format.
 
 Below are 5 randomly sampled wines of the data set.
 

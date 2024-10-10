@@ -11,7 +11,7 @@ This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/
 
 1.  The best model was the Random Forest Model, which yielded an MdAPE of 20.6% and R<sup>2</sup> of 0.435. To skip head, [click for <i>price model</i> summary here.](./wine_libraries/price_model/README.md)
 
-2.  A <i>wine recommender model</i> that uses a sentence input of the user to recommend wines was successfully trained.  To skip ahead, [click for <i>wine recommeder</i> summary here](./wine_libraries/wine_recommender/README.md)
+2.  A <i>wine recommender model</i> that uses a sentence input of the user to recommend wines was successfully trained.  To skip ahead, [click for <i>wine recommender</i> summary here](./wine_libraries/wine_recommender/README.md)
 
 <h3>This README page goes into the details on data.  To skip to results, please click on one of the two links above.</h3>
 
@@ -36,7 +36,7 @@ Below are 5 randomly sampled wines of the data set.
 | Price | Price of wine | _Range_: $4 to 3,330,  _Mean_: $35.62,   _Median_: $25 |
 | Designation | Addition description found on the label of the wine, in addition to the title. Not entirely consistent. |Top 5: _1.'Grande Reserva', 2.'Klipsun Vineyard', 3.'Montée de Tonnerre Premier Cru', 4.'San Lorenzo', 5.'Lawrence Vineyard'_|
 | Variety | This typically contains the variety of the grape, or if it is a blend or unknown it is the type of the wine. | Pinot Noir, Gewürztraminer. |
-| Region-1,  Region-2, Province, Country| These four columns tell the location the wine came from. The info is sometimes redundant and the categorization is not always consistent. |'Napa Valley', 'Napa', 'California', 'US'|
+| Region-1,  Region-2, Province, Country| These four columns tell the location the wine came from. The info is sometimes redundant, and the categorization is not always consistent. |'Napa Valley', 'Napa', 'California', 'US'|
 | Winery | The name of the winery |'Kendall-Jackson'|
 
 POINTS: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1&#963; .
@@ -48,7 +48,7 @@ POINTS: This is the points given by the reviewer to the wine. The range is 80-10
 <br>
 </br>
 
-However, each taster has bias and variance (or grades by a different curve, in layman parlance), so the points are normalized by the subtracting it from the mean and dividing it by the standard deviation for the taster. The normalized points (called norm-points) is used instead of points in the model.
+However, each taster has bias and variance (or grades by a different curve, in layman parlance), so the points are normalized by the subtracting it from the mean and dividing it by the standard deviation for the taster. The normalized points (called norm-points) are used instead of points in the model.
 
 | **taster-name** | **count** | **mean points** | **min** | **max** | **std** |
 | --- | --- | --- | --- | --- | --- |
@@ -169,6 +169,6 @@ Here are the 40 most popular _geographic locations_ from which the wine came.
 
 Models were trained for two separate use cases:
 1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Click for README.md summary here.](./wine_libraries/price_model/README.md)
-2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines.[Click for README.md summary here](./wine_libraries/wine_recommender//README.md)
+2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines. [Click for README.md summary here](./wine_libraries/wine_recommender//README.md)
 
 

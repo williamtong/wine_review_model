@@ -36,16 +36,24 @@
 <h2>MODELS</h2>
 
 <h3>GBM:</h3> 
+
 1. Employs weak learners (short trees) in series to fit the residues.  
+
 2. Typically the highest performing decision tree based model. 
+
 3. Regularization: Number of features per tree.
+
 4. The drawback is its speed, since it builds decision trees in series so it is difficult to parallelize.
     
 
 <h3>RFM: </h3>
+
 1. Uses strong learners (deep trees). 
+
 2. Avoids overfitting by fitting multiple trees in parallel.  
+
 3. Trees are <i>decorrelated</i> by changing the features each has access to (max_features parameter)
+
 4. Usually performs slightly less well the GBM.  Good for Proof of Concept experiments.
 
 <h3>Neural Network: </h3>

@@ -13,27 +13,28 @@ A different approach is needed to satisfy these two business needs. Whereas in b
 
 <h2>EXAMPLES OF THE WINE RECOMMENDER</h2>
 
-Below shows the response to the input of text of the user's desired wine and price.
+The best way to demonstrate how well the model works is by examples.  Below shows the response to the input of text of the user's desired wine and price.
 
 Your input text = “<b>I want a bubbly fruity refreshing sparkling wine</b>." Your price = $30
 
 <figure>
     <img src='./images/winerec_bubbly_fruity_refreshing_sparkling.png' width="800">
     <figcaption>Figure: "I want a bubbly fruity refreshing sparkling wine." Your price = $30</figcaption>
-</figure>
+</figure><br></br>
 
-Your input text = <b>Robust red cherry with vanilla cinnamon coconut and nutmeg</b>”. Your price = $45
+Your input text = <b>Robust red cherry with vanilla cinnamon coconut and nutmeg</b>”. Your price = $60
 <figure>
     <img src='./images/winerec_robust_red_cherry_vanilla_cinnamon_coconut_nutmeg.png' width="800">
-    <figcaption>Figure: "Eobust red cherry with vanilla cinnamon coconut and nutmeg" Your price = $45</figcaption>
-</figure>
+    <figcaption>Figure: "Robust red cherry with vanilla cinnamon coconut and nutmeg" Your price = $60</figcaption>
+</figure><br></br>
 
 Your input text = "<b>a mature creamy chardonnay aged with oak</b>". Your_price = $35
 <figure>
     <img src='./images/winerec_mature_creamy_chardonnay_aged_with_oak.png' width="800">
-    <figcaption>Figure: " mature creamy chardonnay aged with oak" Your price = $35</figcaption>
-</figure>
-<b>Note: More wine recommender examples can be found in the [wine_recommender/images/](./images/) folder.</b>
+    <figcaption>Figure: "A mature creamy chardonnay aged with oak" Your price = $35</figcaption>
+</figure><br></br>
+
+<b>Note: More wine recommender examples can be found in the [wine_recommender/images/](<./images/>) folder.</b>
 
 As one can see, the model works very well. It can be used to help wine lovers look for the wine at they want at a price point they can afford.
 

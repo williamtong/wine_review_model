@@ -96,7 +96,7 @@ Most of the wines are priced below $36. However, the highest priced wines are $3
 <br>
 </br>
 
-<h3>Location information</h3>
+<h3>LOCATION INFORMATION</h3>
 <figure>
     <img src='./wine_libraries/images/Reviewed_designations.png' width="800">
 <figcaption>Figure: Top 40 designations. This field typically contains extra information probably found on the label of the wine, in addition to that already covered in the <i>title</i>. It is not entirely consistent. 
@@ -173,6 +173,6 @@ Here are the 40 most popular _geographic locations_ from which the wine came.
 <br>
 </br>
 
-Models were trained for two separate use cases:
+<h3>Models were trained for two separate use cases:</h3>
 1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [click for <i>wine price predictor</i> summary here](./wine_libraries/price_model/README.md)
 2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines. [click for <i>wine recommender</i> summary here](./wine_libraries/wine_recommender//README.md)

@@ -1,23 +1,27 @@
 <h1>Wines of the world</h1>
 
 <figure>
-    <img src='./wine_libraries/images/Wine_tasting.jpeg' width="800">
+    <img src='./wine_libraries/images/Wine_tasting.jpeg' width="600">
     <figcaption>Source: https://vacationmavens.com/184-wine-tasting-tips-and-wine-travel/</figcaption>
-</figure>
+</figure><br></br>
 
-This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format.
+This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/zynicide/wine-reviews>) data set published on Kaggle, where it can be downloaded. The details of the data are discussed there also. This work has two main threads:
+
+1.  A wine price predictor model.
+
+2.  A wine recommender, based on a user's instantaneous text input.
 
 <h3>Topline summary:</h3>
 
-1.  The best model was the Random Forest Model, which yielded an MdAPE of 20.6% and R<sup>2</sup> of 0.435. To skip head, [click for <i>price model</i> summary here.](./wine_libraries/price_model/README.md)
+1.  The best <i>price predictor</i> model was the Random Forest Model, which yielded an MdAPE of 20.6% and R<sup>2</sup> of 0.435. To  skip head and read details about the <i>price predictor</i> model, [click here.](./wine_libraries/price_model/README.md)
 
-2.  A <i>wine recommender model</i> that uses a sentence input of the user to recommend wines was successfully trained.  To skip ahead, [click for <i>wine recommender</i> summary here](./wine_libraries/wine_recommender/README.md)
+2.  A <i>wine recommender model</i> that uses a sentence input of the user to recommend wines was successfully trained.  To skip ahead to the results of the <i>wine recommender </i>model, [click here](./wine_libraries/wine_recommender/README.md)
 
 <h3>This README page goes into the details on data.  To skip to results, please click on one of the two links above.</h3>
 
 <h3>INTRODUCTION TO THE DATA SET</h3>
 
-Below are 5 randomly sampled wines of the data set.
+Briefly, it contains about information for about 110,000 unique wines (after deduplication). The following is a random sample of the data set, shown in a pandas dataframe format. Below are 5 randomly sampled wines of the data set.
 
 <figure>
     <img src='./wine_libraries/images/wines_datasample.png' width="800">
@@ -168,7 +172,7 @@ Here are the 40 most popular _geographic locations_ from which the wine came.
 </br>
 
 Models were trained for two separate use cases:
-1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Click for README.md summary here.](./wine_libraries/price_model/README.md)
-2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines. [Click for README.md summary here](./wine_libraries/wine_recommender//README.md)
+1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Cclick for <i>wine price predictor</i> summary here](./wine_libraries/price_model/README.md)
+2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines. [click for <i>wine recommender</i> summary here](./wine_libraries/wine_recommender//README.md)
 
 

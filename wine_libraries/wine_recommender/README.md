@@ -15,16 +15,18 @@ A different approach is needed to satisfy these two business needs. Whereas in b
 
 Below show the response to the input of text of the wine and the price desired, and a price importance of 0.01.
 
-Your wine = “<b>I want a bubbly fruity refreshing sparkling wine</b>. "Your price = $20
+Your input text = “<b>I want a bubbly fruity refreshing sparkling wine</b>. "Your price = $20
+
+
 ![sparkling wines](./images/winerec_ex_sparkling.png)
 
 
-Your wine = <b>robust red wine with hints of vanilla cinnamon coconut nutmeg</b>”.
+Your input text = <b>robust red wine with hints of vanilla cinnamon coconut nutmeg</b>”.
 Your price = $45
 ![red wine](./images/winerec_ex_red.png)
 
 
-Your wine = "<b>a mature creamy chardonnay aged with oak</b>"
+Your input text = "<b>a mature creamy chardonnay aged with oak</b>"
 Your_price = $35
 ![creamy chardonnay](./images/winerec_ex_creamy.png)
 

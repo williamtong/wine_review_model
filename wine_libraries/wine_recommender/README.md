@@ -62,7 +62,7 @@ These results are simply bad. None of the wines are even sparkling wines.  But w
 
 <h4>Noise</h4>
 
-Why did CS produce so much better results? One likely explanation is the notorious ![“curse of dimensionality”](<https://datascience.stackexchange.com/questions/27726/when-to-use-cosine-simlarity-over-euclidean-similarity>). The embeddings have a dimension of 768. At such large dimensions, points in general are very far away from each other. The relative distance between any two points is thus very sensitive to noise in the system. CS on the other hand, depends only on the dot product between two vectors (their lengths do not matter), so it is less sensitive to noise.
+Why did CS produce so much better results? One likely explanation is the notorious [“curse of dimensionality”](<https://datascience.stackexchange.com/questions/27726/when-to-use-cosine-simlarity-over-euclidean-similarity>). The embeddings have a dimension of 768. At such large dimensions, points in general are very far away from each other. The relative distance between any two points is thus very sensitive to noise in the system. CS on the other hand, depends only on the dot product between two vectors (their lengths do not matter), so it is less sensitive to noise.
 
 <h4>Generic wines have shorter Euclidean lengths.  In other words, they are closer to the center of the embedding space, so they are closer to more wines and are recommended more often.</h4>
 

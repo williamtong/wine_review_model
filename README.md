@@ -42,9 +42,9 @@ Briefly, it contains about information for about 110,000 unique wines (after ded
 | Variety | This typically contains the variety of the grape, or if it is a blend or unknown it is the type of the wine. | Pinot Noir, Gewürztraminer. |
 | Region-1,  Region-2, Province, Country| These four columns tell the location the wine came from. The info is sometimes redundant, and the categorization is not always consistent. |'Napa Valley', 'Napa', 'California', 'US'|
 | Winery | The name of the winery |'Kendall-Jackson'|
+<br></br>
 
-POINTS: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1&#963; .
-
+<h3>POINTS</h3>: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1&#963; .
 <figure>
     <img src='./wine_libraries/images/raw_point_distribution.png' width="800">
 <figcaption>Figure: Distribution of reviewers' raw points</figcaption>
@@ -76,6 +76,7 @@ However, each taster has bias and variance (or grades by a different curve, in l
 | Susan Kostrzewa | 1011 | 86.59 | 80  | 94  | 2.4 |
 | Unknown | 23273 | 87.78 | 80  | 100 | 3.3 |
 | Virginie Boone | 8682 | 89.22 | 80  | 99  | 3.1 |
+<br></br>
 
 <h3>PRICE</h3>
 
@@ -95,7 +96,7 @@ Most of the wines are priced below $36. However, the highest priced wines are $3
 <br>
 </br>
 
-
+<h3>Location information</h3>
 <figure>
     <img src='./wine_libraries/images/Reviewed_designations.png' width="800">
 <figcaption>Figure: Top 40 designations. This field typically contains extra information probably found on the label of the wine, in addition to that already covered in the <i>title</i>. It is not entirely consistent. 
@@ -111,7 +112,6 @@ Most of the wines are priced below $36. However, the highest priced wines are $3
 </figure>
 <br>
 </br>
-
 
 
 | **country** | count |
@@ -161,6 +161,8 @@ Most of the wines are priced below $36. However, the highest priced wines are $3
 | **China** | 1   |
 
 Table: Above is the comprehensive list of countries of the wines in the data set. Notice most wines in the data set are from the US. This is not surprising, as the reviewers are all Americans.
+<br>
+</br>
 
 Here are the 40 most popular _geographic locations_ from which the wine came.  
 
@@ -172,7 +174,5 @@ Here are the 40 most popular _geographic locations_ from which the wine came.
 </br>
 
 Models were trained for two separate use cases:
-1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [Cclick for <i>wine price predictor</i> summary here](./wine_libraries/price_model/README.md)
+1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [click for <i>wine price predictor</i> summary here](./wine_libraries/price_model/README.md)
 2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines. [click for <i>wine recommender</i> summary here](./wine_libraries/wine_recommender//README.md)
-
-

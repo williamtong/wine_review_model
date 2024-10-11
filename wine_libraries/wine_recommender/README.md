@@ -31,7 +31,7 @@ Your_price = $35
 ![creamy chardonnay](./images/winerec_ex_creamy.png)
 
 
-Note: More wine recommender examples can be found in the [wine_libraries/wine_recommender/images/](./wine_libraries/wine_recommender/images/) folder.
+Note: More wine recommender examples can be found in the [wine_libraries/wine_recommender/images/](./images/) folder.
 
 As one can see, the model works very well. It can be used to help wine lovers look for the wine at they want at a price point they can afford.
 

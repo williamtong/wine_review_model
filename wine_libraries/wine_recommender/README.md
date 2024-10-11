@@ -15,13 +15,15 @@ A different approach is needed to satisfy these two business needs. Whereas in b
 
 Below shows the response to the input of text of the user's desired wine and price.
 
-Your input text = “<b>I want a bubbly fruity refreshing sparkling wine</b>." Your price = $20
+Your input text = “<b>I want a bubbly fruity refreshing sparkling wine</b>." Your price = $30
 
-
-![sparkling wines](./images/winerec_ex_sparkling.png)
+<figure>
+    <img src='./images/winerec_bubbly_fruity_refreshing_sparkling.png' width="800">
+    <figcaption>Figure: "I want a bubbly fruity refreshing sparkling wine." Your price = $30</figcaption>
+</figure>
 
 Your input text = <b>robust red wine with hints of vanilla cinnamon coconut nutmeg</b>”. Your price = $45
-![red wine](./images/winerec_ex_red.png)
+![red wine](../images/winerec_robust_red_cherry_vanilla_cinnamon_coconut_nutmeg.png)
 
 Your input text = "<b>a mature creamy chardonnay aged with oak</b>". Your_price = $35
 ![creamy chardonnay](./images/winerec_ex_creamy.png)

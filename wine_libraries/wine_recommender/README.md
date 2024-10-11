@@ -42,7 +42,7 @@ As one can see, the model works very well. It can be used to help wine lovers lo
 
 The model above is based on calculating the similarity between the descriptions and prices of the input and each of the wine in the data base.  That is, the overall similarity is product of the description and price similarities.  Mathematically, it is represented as follows:
 
-<center><i><h4>Similarity<sub>total</sub> = Similarity<sub>text</sub>  x  Similarity<sub>price</sub></h4></i></center>
+<i><h4 style="text-align:center;">Similarity<sub>total</sub> = Similarity<sub>text</sub>  x  Similarity<sub>price</sub></h4></i>
 
 <u><h3><i>Similarity<sub>text</sub>: Using Sentence Transformers</i></h3></u>
 
@@ -90,7 +90,7 @@ Further investigation revealed another explanation: The most similar wines by ED
 
 No wine consumer will ignore the price of a wine in the selection process. Thus any good wine recommender must account for it.  We employ the following function, which is the normalized variance of the prices, multiplied by a _price importance_ (0 ≤ price_imp ≤ 1) factor.
 
-<center><h4><i>Similarity<sub>price</sub> = exp<sup> -(price<sub>interest</sub> - price <sub>another wine</sub>) <sup>2 </sup>price_importance <sup>2 </sup>/price<sub>interest</sub><sup>2</sup></i></h4></center>
+<h4 style="text-align:center;"><i>Similarity<sub>price</sub> = exp<sup> -(price<sub>interest</sub> - price <sub>another wine</sub>) <sup>2 </sup>price_importance <sup>2 </sup>/price<sub>interest</sub><sup>2</sup></i></h4>
 
 The only parameter is <u>price_importance</u>.  Its effects can be seen in the figure.  A larger <i>price_importance</i> make the <i>Similarity<sub>price</sub></i> effect stronger, and a smaller <i>price_importance</i> makes it weaker.
 

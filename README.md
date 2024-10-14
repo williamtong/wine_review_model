@@ -17,7 +17,7 @@ This work is based on the [“Wine Reviews”](<https://www.kaggle.com/datasets/
 
 2.  A <i>wine recommender model</i> that uses a sentence input of the user to recommend wines was successfully trained.  To skip ahead to the results of the <i>wine recommender </i>model, [click here](./wine_libraries/wine_recommender/README.md)
 
-<h3>This README page goes into the details on data.  To skip to results, please click on one of the two links above.</h3>
+<h3>This README page only goes into the details on data.  To skip to results, please click on one of the two links above.</h3>
 
 <h3>INTRODUCTION TO THE DATA SET</h3>
 

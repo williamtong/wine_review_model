@@ -42,9 +42,11 @@ Briefly, it contains about information for about 110,000 unique wines (after ded
 | Variety | This typically contains the variety of the grape, or if it is a blend or unknown it is the type of the wine. | Pinot Noir, Gewürztraminer. |
 | Region-1,  Region-2, Province, Country| These four columns tell the location the wine came from. The info is sometimes redundant, and the categorization is not always consistent. |'Napa Valley', 'Napa', 'California', 'US'|
 | Winery | The name of the winery |'Kendall-Jackson'|
+| --- | --- | --- |
 <br></br>
 
-<h3>POINTS</h3>: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1&#963; .
+
+<h3>POINTS: This is the points given by the reviewer to the wine. The range is 80-100 points, with a mean of 88.4 ± 3.1 1&#963;.</h3>
 <figure>
     <img src='./wine_libraries/images/raw_point_distribution.png' width="800">
 <figcaption>Figure: Distribution of reviewers' raw points</figcaption>
@@ -173,6 +175,10 @@ Here are the 40 most popular _geographic locations_ from which the wine came.
 <br>
 </br>
 
-<h3>Models were trained for two separate use cases:</h3>
-1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [click for <i>wine price predictor</i> summary here](./wine_libraries/price_model/README.md)
+<h3>Models for two separate use cases were trained:</h3><br>
+</br>
+
+1.  Price model:  Employs the text, winery, and geographic origin of the wine, and the score (points) given by its review to predict its price.  [click for <i>wine price predictor</i> summary here](./wine_libraries/price_model/README.md)<br>
+</br>
+
 2.  Wine Recommender:  Based on the taster review text, it allows the user to describe the wine she/he wants and the price she/he wants to pay, and the model will recommend the best wines. [click for <i>wine recommender</i> summary here](./wine_libraries/wine_recommender//README.md)
